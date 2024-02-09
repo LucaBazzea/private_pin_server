@@ -1,6 +1,8 @@
 package main
 
 import (
+	"private_pin_server/database"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -9,6 +11,7 @@ func hello_world(context *fiber.Ctx) error {
 }
 
 func main() {
+	database.ConnectDb()
 	app := fiber.New()
 
 	app.Get("/", hello_world)
