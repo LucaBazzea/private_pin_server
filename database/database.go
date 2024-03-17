@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 
-	"private_pin_server/model"
+	"github.com/LucaBazzea/private_pin_server/models"
 )
 
 type DbInstance struct {
