@@ -1,6 +1,6 @@
-FROM golang:1.22.1
+FROM golang:1.22.1-alpine3.18
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY . .
 RUN go mod tidy
