@@ -1,7 +1,7 @@
 package main
 
 import (
-	"private_pin_server/database"
+	"github.com/LucaBazzea/private_pin_server/database"
 
 	"github.com/gofiber/fiber/v2"
 )
