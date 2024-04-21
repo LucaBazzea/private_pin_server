@@ -6,7 +6,6 @@ require (
 	github.com/gofiber/fiber/v2 v2.52.0
 	gorm.io/driver/sqlite v1.5.5
 	gorm.io/gorm v1.25.7
-  github.com/cosmtrek/air@latest
 )
 
 require (
