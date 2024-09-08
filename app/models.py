@@ -47,5 +47,5 @@ class Pod(models.Model):
 
 class PodMember(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
-    circle = models.ForeignKey(Pod, on_delete=models.PROTECT)
-    created_at = models.DateTimeField(auto_now_add=True)
+    pod = models.ForeignKey(Pod, on_delete=models.PROTECT)
+    joined = models.DateTimeField(auto_now_add=True)
