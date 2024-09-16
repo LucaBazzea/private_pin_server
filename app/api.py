@@ -1,16 +1,15 @@
+from django.db.models import Q
 from ninja import NinjaAPI, Schema
 
-from .models import User
+from .models import User, Connection
 
 
 api = NinjaAPI()
 
 @api.get("/get-user")
 def get_user(request, id: int):
-    print(id)
     try:
         user = User.objects.get(id=id)
-        print(user)
     except User.DoesNotExist:
         return 404
 
@@ -24,3 +23,21 @@ def get_user(request, id: int):
     }
 
     return response
+
+@api.get("/get-connections")
+def get_connections(request, user_id: int):
+    try:
+        connection_query = Connection.objects.filter(
+            Q(user_from=user_id) | Q(user_to=user_id)
+        )
+    except Connection.DoesNotExist:
+        return 404
+
+    connections = []
+    for connection in connection_query:
+        if connection.user_from.id != user_id:
+            connections.append(connection.user_from.id)
+        elif connection.user_to.id != user_id:
+            connections.append(connection.user_to.id)
+
+    return connections
