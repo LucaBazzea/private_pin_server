@@ -24,6 +24,16 @@ def get_user(request, id: int):
 
     return response
 
+def build_connection_list(connection, connections: list):
+    return connections.append({
+        "id": connection.id,
+        "username": connection.username,
+        "email": connection.email,
+        "lat": connection.lat,
+        "lon": connection.lon,
+        "last_online": connection.last_online
+    })
+
 @api.get("/get-connections")
 def get_connections(request, user_id: int):
     try:
@@ -34,10 +44,16 @@ def get_connections(request, user_id: int):
         return 404
 
     connections = []
-    for connection in connection_query:
-        if connection.user_from.id != user_id:
-            connections.append(connection.user_from.id)
-        elif connection.user_to.id != user_id:
-            connections.append(connection.user_to.id)
+    for row in connection_query:
+        if row.user_from.id != user_id:
+            connection = row.user_from
+
+        elif row.user_to.id != user_id:
+            connection = row.user_to
+
+        else:
+            continue
+
+        build_connection_list(connection, connections)
 
     return connections
