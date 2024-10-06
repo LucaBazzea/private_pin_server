@@ -6,7 +6,7 @@ class User(models.Model):
     email = models.EmailField()
     lat = models.FloatField(null=True) # TODO: PGP
     lon = models.FloatField(null=True) # TODO: PGP
-    last_online = models.DateTimeField(null=True) # TODO: PGP
+    last_online = models.DateTimeField(auto_now_add=True) # TODO: PGP
     created_at = models.DateTimeField(auto_now_add=True)
 
 
