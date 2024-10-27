@@ -57,3 +57,22 @@ def get_connections(request, user_id: int):
         build_connection_list(connection, connections)
 
     return connections
+
+@api.post("/update-user-location")
+def update_user_location(request, id: int):
+    try:
+        user = User.objects.get(id=id)
+    except User.DoesNotExist:
+        return 404
+
+    try:
+        user(lat=, lon=)
+        user.save()
+    except Exception as error:
+        print(error)
+
+    response = {
+        "message": f"{user.id} {user.username} location updated"
+    }
+
+    return response
