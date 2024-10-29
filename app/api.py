@@ -1,7 +1,10 @@
 from django.db.models import Q
-from ninja import NinjaAPI, Schema
+from django.http import response
+from ninja import NinjaAPI
+from ninja.responses import Response
 
 from .models import User, Connection
+import schema
 
 
 api = NinjaAPI()
@@ -58,21 +61,19 @@ def get_connections(request, user_id: int):
 
     return connections
 
+
 @api.post("/update-user-location")
-def update_user_location(request, id: int):
+def update_user_location(request, UserLocation: schema.UserLocation):
     try:
-        user = User.objects.get(id=id)
+        user = User.objects.get(id=UserLocation.id)
     except User.DoesNotExist:
-        return 404
+        return Response({"error": "User Not Found"}, status=404)
 
     try:
-        user(lat=, lon=)
+        user.lat = UserLocation.lat
+        user.lon = UserLocation.lon
         user.save()
     except Exception as error:
         print(error)
 
-    response = {
-        "message": f"{user.id} {user.username} location updated"
-    }
-
-    return response
+    return Response({"success": f"{user.id} {user.username} location updated"}, status=200)
