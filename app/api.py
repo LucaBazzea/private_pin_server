@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.http import response
+from django.core.cache import cache
 from ninja import NinjaAPI
 from ninja.responses import Response
 
