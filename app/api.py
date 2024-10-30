@@ -4,7 +4,7 @@ from ninja import NinjaAPI
 from ninja.responses import Response
 
 from .models import User, Connection
-import schema
+from app import schema
 
 
 api = NinjaAPI()
