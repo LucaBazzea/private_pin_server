@@ -1,13 +1,18 @@
 from django.db.models import Q
 from django.core.cache import cache
+
 from ninja import NinjaAPI
 from ninja.responses import Response
+from ninja_extra import NinjaExtraAPI
+from ninja_jwt.authentication import JWTAuth
+from ninja_jwt.controller import NinjaJWTDefaultController
 
 from .models import User, Connection
 from app import schema
 
 
-api = NinjaAPI()
+api = NinjaExtraAPI()
+api.register_controllers(NinjaJWTDefaultController)
 
 @api.get("/get-user")
 def get_user(request, id: int):
