@@ -14,6 +14,13 @@ from app import schema
 api = NinjaExtraAPI()
 api.register_controllers(NinjaJWTDefaultController)
 
+@api.post("/login/otp/send")
+def login_otp_send(request: )
+
+
+@api.post("/login/otp/validate")
+
+
 @api.get("/get-user")
 def get_user(request, id: int):
     try:
