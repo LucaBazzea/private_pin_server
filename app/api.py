@@ -3,22 +3,46 @@ from django.core.cache import cache
 
 from ninja import NinjaAPI
 from ninja.responses import Response
-from ninja_extra import NinjaExtraAPI
-from ninja_jwt.authentication import JWTAuth
-from ninja_jwt.controller import NinjaJWTDefaultController
 
 from .models import User, Connection
-from app import schema
+from app import models, schema, services
 
 
-api = NinjaExtraAPI()
-api.register_controllers(NinjaJWTDefaultController)
+api = NinjaAPI()
 
 @api.post("/login/otp/send")
-def login_otp_send(request: )
+def login_otp_send(request, data: schema.UsernameEmailSchema):
+    pin = services.generate_pin()
+
+    cache.set(f"otp:{data.email}", pin, timeout=600)
+    services.send_otp_email(data.email, pin)
 
 
 @api.post("/login/otp/validate")
+def login_otp_validate(request, data: schema.EmailPinSchema):
+    pin_cached = cache.get(f"otp:{data.email}")
+
+    if pin_cached is None:
+        return Response({"error": "OTP Expired"}, status=400)
+
+    if pin_cached != data.pin:
+        return Response({"error": "Invalid OTP"}, status=400)
+
+    try:
+        user = User.objects.get(email=data.email)
+    except User.DoesNotExist:
+        # TODO: Create a new user
+        user = User.objects.create(email=data.email)
+
+    request.session["user_id"] = user.id
+
+    return Response({"id": user.id}, status=200)
+
+
+# TODO: Set a username endpoint
+
+
+# TODO: Logout endpoint
 
 
 @api.get("/get-user")
