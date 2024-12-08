@@ -44,8 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "app.apps.AppConfig"
-    "ninja_extra",
-    "ninja_jwt"
 ]
 
 MIDDLEWARE = [
