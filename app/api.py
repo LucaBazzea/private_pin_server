@@ -56,7 +56,10 @@ def login_otp_validate(request, data: schema.EmailPinSchema):
 # TODO: Set a username endpoint
 
 
-# TODO: Logout endpoint
+@api.get("/logout")
+def logout(request):
+    request.session.flush()
+    return Response("Logout Success", status=200)
 
 
 @api.get("/get-user")
