@@ -2,7 +2,7 @@ from django.db import models
 
 
 class User(models.Model):
-    username = models.CharField(max_length=32) # TODO: limit which characters can be used
+    username = models.CharField(max_length=32, unique=True) # TODO: limit which characters can be used
     email = models.EmailField()
     lat = models.FloatField(null=True) # TODO: PGP
     lon = models.FloatField(null=True) # TODO: PGP
