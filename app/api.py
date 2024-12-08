@@ -30,9 +30,23 @@ def login_otp_validate(request, data: schema.EmailPinSchema):
 
     try:
         user = User.objects.get(email=data.email)
+
     except User.DoesNotExist:
-        # TODO: Create a new user
-        user = User.objects.create(email=data.email)
+        username = data.email.split("@")[0]
+        user = User(
+            username=username,
+            email=data.email,
+        )
+        user.save()
+
+    # Username taken
+    except User.IntegrityError:
+        username = services.generate_username(data.email)
+        user = User(
+            username=username,
+            email=data.email,
+        )
+        user.save()
 
     request.session["user_id"] = user.id
 
