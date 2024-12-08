@@ -53,7 +53,20 @@ def login_otp_validate(request, data: schema.EmailPinSchema):
     return Response({"id": user.id}, status=200)
 
 
-# TODO: Set a username endpoint
+@api.post("/username/change")
+def username_change(request, username_new: str):
+    try:
+        user = User.objects.get(id=request.get("user_id"))
+    except User.DoesNotExist:
+        return Response({"error": "User Not Found"}, status=404)
+
+    try:
+        user.username = username_new
+        user.save()
+    except User.IntegrityError:
+        return Response({"error": "Username Taken"}, status=400)
+
+    return Response({"success": f"{user.id} {user.username} username updated"}, status=200)
 
 
 @api.get("/logout")
