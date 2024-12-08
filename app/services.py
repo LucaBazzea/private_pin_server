@@ -7,3 +7,7 @@ def generate_pin():
 
 def send_otp_email(email, pin):
     pass
+
+
+def generate_username(email):
+    return email.split("@")[0] + str(secrets.randbelow(9000) + 1000)
