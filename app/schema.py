@@ -7,8 +7,7 @@ class UserLocation(Schema):
     lon: float
 
 
-class UsernameEmailSchema(Schema):
-    username: str
+class EmailSchema(Schema):
     email: str
 
 

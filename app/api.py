@@ -11,7 +11,7 @@ from app import models, schema, services
 api = NinjaAPI()
 
 @api.post("/login/otp/send")
-def login_otp_send(request, data: schema.UsernameEmailSchema):
+def login_otp_send(request, data: schema.EmailSchema):
     pin = services.generate_pin()
 
     cache.set(f"otp:{data.email}", pin, timeout=600)
