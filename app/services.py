@@ -1,5 +1,7 @@
 import secrets
 
+import requests
+
 
 def generate_pin():
     return secrets.randbelow(900000) + 100000
