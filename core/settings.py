@@ -27,7 +27,15 @@ load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
+ONESIGNAL_APP_ID = os.getenv("ONESIGNAL_APP_ID")
 ONESIGNAL_KEY = os.getenv("ONESIGNAL_KEY")
+
+AWS_REGION = os.getenv("AWS_REGION")
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+
+SES_CLIENT_ID = os.getenv("SES_CLIENT_ID")
+SES_CLIENT_SECRET = os.getenv("SES_CLIENT_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
