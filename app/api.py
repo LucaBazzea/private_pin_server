@@ -15,9 +15,9 @@ def login_otp_send(request, data: schema.EmailSchema):
     pin = services.generate_pin()
 
     cache.set(f"otp:{data.email}", pin, timeout=600)
-    services.send_otp_email(data.email, pin)
 
-    return Response({"success": "OTP Sent"}, status=200)
+    if services.send_otp_email(data.email, pin):
+        return Response({"success": "OTP Sent"}, status=200)
 
 
 @api.post("/login/otp/validate")
