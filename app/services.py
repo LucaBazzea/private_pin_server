@@ -40,11 +40,13 @@ def send_otp_email(email, pin):
     }
 
     try:
-        response = ses.send_email(Message=message)
-        print("Email sent successfully!")
+        response = ses.send_email(Source=message["Source"], Destination=message["Destination"], Message=message["Message"])
         print(response)
-    except ClientError as e:
-        print("Error sending email:", e.response["Error"]["Message"])
+    except ClientError as error:
+        print("Error sending email:", error.response["Error"]["Message"])
+        return False
+
+    return True
 
 def generate_username(email):
     return email.split("@")[0] + str(secrets.randbelow(9000) + 1000)
