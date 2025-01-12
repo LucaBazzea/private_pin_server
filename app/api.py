@@ -10,7 +10,7 @@ from app import models, schema, services
 
 api = NinjaAPI()
 
-@api.post("/login/otp/send")
+@api.post("/login/otp/send/")
 def login_otp_send(request, data: schema.EmailSchema):
     pin = services.generate_pin()
 
@@ -20,7 +20,7 @@ def login_otp_send(request, data: schema.EmailSchema):
         return Response({"success": "OTP Sent"}, status=200)
 
 
-@api.post("/login/otp/validate")
+@api.post("/login/otp/validate/")
 def login_otp_validate(request, data: schema.EmailPinSchema):
     pin_cached = cache.get(f"otp:{data.email}")
 
@@ -55,7 +55,7 @@ def login_otp_validate(request, data: schema.EmailPinSchema):
     return Response({"id": user.id}, status=200)
 
 
-@api.post("/username/change")
+@api.post("/username/change/")
 def username_change(request, username_new: str):
     try:
         user = User.objects.get(id=request.get("user_id"))
@@ -71,13 +71,13 @@ def username_change(request, username_new: str):
     return Response({"success": f"{user.id} {user.username} username updated"}, status=200)
 
 
-@api.get("/logout")
+@api.get("/logout/")
 def logout(request):
     request.session.flush()
     return Response("Logout Success", status=200)
 
 
-@api.get("/get-user")
+@api.get("/get-user/")
 def get_user(request, id: int):
     try:
         user = User.objects.get(id=id)
@@ -105,7 +105,7 @@ def build_connection_list(connection, connections: list):
         "last_online": connection.last_online
     })
 
-@api.get("/get-connections")
+@api.get("/get-connections/")
 def get_connections(request, user_id: int):
     try:
         connection_query = Connection.objects.filter(
@@ -130,7 +130,7 @@ def get_connections(request, user_id: int):
     return connections
 
 
-@api.post("/update-user-location")
+@api.post("/update-user-location/")
 def update_user_location(request, UserLocation: schema.UserLocation):
     try:
         user = User.objects.get(id=UserLocation.id)
